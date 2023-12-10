@@ -1,0 +1,67 @@
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 10px red;
+    }
+    20% {
+        box-shadow: 0 0 10px orange;
+    }
+    40% {
+        box-shadow: 0 0 10px yellow;
+    }
+    60% {
+        box-shadow: 0 0 10px green;
+    }
+    80% {
+        box-shadow: 0 0 10px blue;
+    }
+    100% {
+        box-shadow: 0 0 10px violet;
+    }
+}
+
+.main {
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.work-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    height: 50vh;
+    margin: auto;
+}
+
+.work-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 4px solid;
+    border-image: linear-gradient(20deg, red, orange, yellow, green, blue, indigo, violet, purple) 1;
+    animation: glowing 2s ease infinite;
+}
+
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .work-box {
+        width: 70vw;
+        height: 70vh;
+    }
+}
+
+/* For mobile devices */
+@media (max-width: 767px) {
+    .work-box {
+        width: 90vw;
+        height: 90vh;
+    }
+}

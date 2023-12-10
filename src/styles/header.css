@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Cartoon';
+    src: url('../assets/font/cartoon.otf') format('opentype');
+}
+
+@keyframes gradient {
+    0% { background-position: 0 50%; }
+    20% { background-position: 25% 50%; }
+    40% { background-position: 50% 50%; }
+    60% { background-position: 75% 50%; }
+    80% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+.header h1 {
+    font-family: 'Cartoon', sans-serif;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 500;
+    background: linear-gradient(20deg, red, orange, yellow, green, blue, indigo, violet, purple);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient 5s ease infinite;
+    line-height: normal;
+}
+
+.header {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 5vh;
+    padding: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    animation: lightningFlash 1s infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
