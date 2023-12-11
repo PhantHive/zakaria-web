@@ -39,7 +39,7 @@ html {
   height: 100%;
   background-image: url('https://imgur.com/kHonb0A.png');
   background-size: cover;
-  filter: brightness(0.2);
+  filter: brightness(0.5);
   z-index: -1;
 }
 

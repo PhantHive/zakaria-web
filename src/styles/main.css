@@ -65,3 +65,10 @@
         height: 90vh;
     }
 }
+
+@media screen and (orientation: landscape) {
+    .work-box {
+        width: 45vw;
+        height: 45vh;
+    }
+}

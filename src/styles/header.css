@@ -39,3 +39,9 @@
     justify-content: center;
     align-items: center;
 }
+
+@media screen and (orientation: landscape) {
+    .header {
+        height: 10vh;
+    }
+}
