@@ -4,6 +4,8 @@ const useImageSlider = () => {
     const images = ref<string[]>([
         'mywork/ania-bot.png',
         'mywork/crossword-generator.png',
+        'mywork/kbtool.gif',
+        'mywork/pheabots.png',
     ]);
     let imageIndex = ref(0);
     const currentImage = computed(() => images.value[imageIndex.value]);
