@@ -7,39 +7,16 @@ let currentBackground = 1;
 // Total number of background images
 const totalBackgrounds = 2;
 
-// Variables to keep track of the initial and final touch positions
-let initialTouchPosition: null | number = null;
-let finalTouchPosition: null | number = null;
+// Touch event state variables
+let isTap = false;
+let startTouchTime = 0;
+let startTouchPosition: null | number = null;
+let endTouchPosition: null | number = null;
+const swipeThreshold = window.innerWidth * 0.1; // Adjust the swipe threshold
 
-function changeBackground(event: WheelEvent | TouchEvent) {
+function changeBackground(direction: number) {
     console.log('changeBackground');
-    // Check the direction of the scroll or swipe
-    let direction: number = 0;
-    if ('deltaY' in event) {
-        direction = Math.sign(event.deltaY);
-    } else {
-        const touchEvent = event as TouchEvent;
-        if (event.type === 'touchstart') {
-            initialTouchPosition = touchEvent.touches[0].clientX;
-        } else if (event.type === 'touchend') {
-            if (initialTouchPosition === null) {
-                // touchstart event was not fired before touchend event, return without changing the background
-                return;
-            }
-            finalTouchPosition = touchEvent.changedTouches[0].clientX;
-            const touchMoveDistance = finalTouchPosition - initialTouchPosition;
-            if (Math.abs(touchMoveDistance) < window.innerWidth * 0.4) {
-                return;
-            }
-            direction = Math.sign(touchMoveDistance);
-            initialTouchPosition = null;
-            finalTouchPosition = null;
-        } else {
-            return;
-        }
-    }
 
-    // Update the current background based on the scroll or swipe direction
     if (direction > 0) {
         currentBackground = (currentBackground % totalBackgrounds) + 1;
     } else {
@@ -73,11 +50,42 @@ function changeBackground(event: WheelEvent | TouchEvent) {
     }
 }
 
-export function initBackgroundTransition() {
-    // Listen for wheel event
-    window.addEventListener('wheel', changeBackground);
+function handleSwipeStart(event: TouchEvent) {
+    isTap = true;
+    startTouchTime = event.timeStamp;
+    startTouchPosition = event.touches[0].clientX;
+}
 
+function handleSwipeMove(event: TouchEvent) {
+    if (isTap) {
+        isTap = false;
+    }
+    endTouchPosition = event.touches[0].clientX;
+}
+
+function handleSwipeEnd(event: TouchEvent) {
+    if (isTap) {
+        return;
+    }
+
+    const swipeDistance = (endTouchPosition ?? 0) - (startTouchPosition ?? 0);
+    const swipeTime = event.timeStamp - startTouchTime;
+
+    if (Math.abs(swipeDistance) >= swipeThreshold && swipeTime < 1000) {
+        // It's a valid swipe
+        changeBackground(Math.sign(swipeDistance));
+    }
+}
+
+export function initBackgroundTransition() {
     // Listen for touch events for mobile devices
-    window.addEventListener('touchstart', changeBackground);
-    window.addEventListener('touchend', changeBackground);
+    window.addEventListener('touchstart', handleSwipeStart);
+    window.addEventListener('touchmove', handleSwipeMove);
+    window.addEventListener('touchend', handleSwipeEnd);
+
+    // Listen for wheel event
+    window.addEventListener('wheel', (event: WheelEvent) => {
+        let direction = Math.sign(event.deltaY);
+        changeBackground(direction);
+    });
 }
