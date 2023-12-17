@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { initBackgroundTransition } from '../animation/backgroundTransition.ts';
 import useImageSlider from '../animation/displayMyWork';
 const { currentImage } = useImageSlider();
+initBackgroundTransition();
 </script>
 
 <template>

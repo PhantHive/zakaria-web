@@ -12,13 +12,12 @@ const useImageSlider = () => {
         'mywork/opti-resolver.png',
         'mywork/pheabots.png',
         'mywork/zilya-bot.png',
-        'mywork/bigbrain.png'
+        'mywork/bigbrain.png',
     ]);
     let imageIndex = ref(0);
     const currentImage = computed(() => images.value[imageIndex.value]);
 
     function nextImage() {
-        console.log('nextImage');
         imageIndex.value = (imageIndex.value + 1) % images.value.length;
     }
 

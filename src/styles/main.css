@@ -28,6 +28,7 @@
     100% { border-image-source: linear-gradient(20deg, indigo, violet, purple, red, orange, yellow, green, blue); }
 }
 
+
 .main {
     position: absolute;
     top: 5vh;

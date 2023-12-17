@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "predeploy": "echo 'phanthive.com' > dist/CNAME",
+    "deploy": "npm run build && npm run predeploy && gh-pages -d dist",
     "preview": "vite preview",
-    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,vue,json,md}\"",
-    "deploy": "gh-pages -d dist"
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,vue,json,md}\""
   },
   "dependencies": {
     "prettier": "^3.1.1",
