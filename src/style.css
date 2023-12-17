@@ -41,18 +41,18 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('background/01.png');
+  background-image: url('../public/background/01.png');
   background-size: cover;
   filter: brightness(0.5);
   z-index: -1;
 }
 
 #background.background-01 {
-    background-image: url('background/01.png');
+    background-image: url('../public/background/01.png');
 }
 
 #background.background-02 {
-    background-image: url('background/02.png');
+    background-image: url('../public/background/02.png');
 }
 
 canvas{
@@ -110,12 +110,12 @@ button:focus-visible {
 /*for phone base image is: /public/background/phone-01.png if width <= 800*/
 @media (max-width: 800px) {
   #background {
-    background-image: url('background/phone-01.png');
+    background-image: url('../public/background/phone-01.png');
   }
   #background.phone-01 {
-    background-image: url('background/phone-01.png');
+    background-image: url('../public/background/phone-01.png');
   }
   #background.phone-02 {
-    background-image: url('background/phone-02.png');
+    background-image: url('../public/background/phone-02.png');
   }
 }
