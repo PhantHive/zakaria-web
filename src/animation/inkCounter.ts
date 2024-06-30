@@ -28,6 +28,12 @@ export class InkCounter {
 
   private updateCounter() {
     this.countDisplay.textContent = `${this.clickCount}`;
+    this.countDisplay.style.transform = 'scale(1.2)';
+    this.counterElement.classList.add('splatoon-effect');
+    setTimeout(() => {
+      this.countDisplay.style.transform = 'scale(1)';
+      this.counterElement.classList.remove('splatoon-effect');
+    }, 500);
   }
 
   private animateInkSplatter() {
@@ -36,7 +42,7 @@ export class InkCounter {
 
     this.inkSplatter.style.setProperty('--splatter-color', color);
     this.inkSplatter.classList.remove('animate');
-    void this.inkSplatter.offsetWidth; // Trigger reflow
+    void this.inkSplatter.offsetWidth;
     this.inkSplatter.classList.add('animate');
   }
 
