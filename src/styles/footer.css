@@ -20,4 +20,20 @@
     color: #fff;
 }
 
+.desktop-footer {
+    display: none;
+}
 
+.mobile-footer {
+    display: flex;
+}
+
+@media (min-width: 769px) {
+    .desktop-footer {
+        display: flex;
+    }
+
+    .mobile-footer {
+        display: none;
+    }
+}

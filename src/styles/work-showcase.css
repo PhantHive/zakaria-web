@@ -7,7 +7,7 @@
     overflow: hidden;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    background: #1e1e1e; /* Unified background color */
+    background: rgba(30, 30, 30, 0.4); /* Semi-transparent background */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,7 +19,7 @@
     transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 20px;
     overflow: hidden;
-    background: #1e1e1e; /* Unified background color */
+    background: rgba(30, 30, 30, 0.2); /* Semi-transparent background */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,12 +35,13 @@
     -moz-user-select: none; /* Disable selection for Firefox */
     -ms-user-select: none; /* Disable selection for IE/Edge */
     user-select: none; /* Disable selection for modern browsers */
+    opacity: 0.9;
 }
 
 .work-item:hover .work-image {
     transform: scale(1.05);
+    opacity: 0.25;
 }
-
 
 .work-info {
     display: flex;
@@ -48,7 +49,8 @@
     justify-content: center;
     flex-direction: column;
     padding: 2rem;
-    background: #2c2c2c; /* Darker background for info section */
+    background: rgba(44, 44, 44, 0.85); /* Semi-transparent background */
+    backdrop-filter: blur(5px); /* Blur effect */
     color: #fff;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -102,7 +104,7 @@
     .work-info {
         position: static;
         transform: translateY(0) !important;
-        background: #2c2c2c;
+        background: rgba(44, 44, 44, 0.85);
         padding: 1rem;
         margin-top: 0;
         border-radius: 0 0 20px 20px;
