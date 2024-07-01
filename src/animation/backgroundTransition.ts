@@ -21,7 +21,8 @@ function changeBackground(direction: number) {
     const background = document.getElementById('background');
     if (background) {
         background.className = ''; // Remove all classes
-        if (window.innerWidth <= 800) {
+        // if screen width is less than 800px, use phone backgrounds except if the phone is in landscape mode
+        if (window.innerWidth <= 800 && window.innerWidth < window.innerHeight) {
             background.classList.add(`phone-0${currentBackground}`);
         } else {
             background.classList.add(`background-0${currentBackground}`);
@@ -64,6 +65,6 @@ export function initBackgroundTransition() {
     // Initialize the background
     const background = document.getElementById('background');
     if (background) {
-        background.classList.add(window.innerWidth <= 800 ? 'phone-01' : 'background-01');
+        background.classList.add(window.innerWidth <= 800 && window.innerWidth < window.innerHeight ? 'phone-01' : 'background-01');
     }
 }

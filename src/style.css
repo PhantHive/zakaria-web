@@ -147,7 +147,7 @@ button:focus-visible {
   }
 }
 
-/*for phone base image is: /public/background/phone-01.png if width <= 800*/
+/*for phone base image is: /public/background/phone-05.png if width <= 800*/
 @media (max-width: 800px) {
   #background {
     background-image: url('../public/background/phone-01.png');

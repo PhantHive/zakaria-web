@@ -32,7 +32,6 @@
         <div class="ink-splatter"></div>
       </div>
     </div>
-    <div class="ink-counter">Ink: {{ inkCount }}</div>
     <div id="fairies-container"></div>
   </main>
 </template>
@@ -50,7 +49,6 @@ const { currentWork, nextImage, pauseSlider, resumeSlider } = useImageSlider();
 const { inkSplashes, addSplash } = useInkSplash();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-const inkCount = ref(0);
 
 const pauseImageTransition = () => {
   pauseSlider();
@@ -68,7 +66,6 @@ onMounted(() => {
   }
 
   document.addEventListener('click', (event) => {
-    inkCount.value++;
     nextImage();
     addSplash(event.clientX, event.clientY);
   });

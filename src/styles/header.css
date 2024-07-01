@@ -80,7 +80,7 @@
     color: #ffffff;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px; /* Adjusted padding for better appearance */
+    padding: calc(var(--header-height) * 0.05);
     border-radius: 8px;
     user-select: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Added shadow for better visibility */
@@ -91,9 +91,22 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
+.ink-counter {
+    position: fixed;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    color: #fff;
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    transition: background-color 0.3s ease;
+}
+
 @media screen and (orientation: landscape) {
     .header {
-        height: 8vh;
+        height: 10vh;
     }
 
     .header h1 {
@@ -109,8 +122,15 @@
         display: none;
     }
 
+/*    calc font-size to be less than header height */
     .header .nav-links span {
-        font-size: 1.5em;
-        background: transparent;
+        font-size: calc(var(--header-height) * 0.5);
+        background: none;
     }
+
+/*    remove gray background*/
+    .header:hover .nav-links span {
+        background: none;
+    }
+
 }

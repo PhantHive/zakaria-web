@@ -19,7 +19,7 @@ const useImageSlider = () => {
     {
       image: 'mywork/aircraft-stability.png',
       title: 'Aircraft Stability',
-      description: 'Advanced flight dynamics analysis tool for aerospace engineering. This program allows for the analysis of aircraft stability and control characteristics using a state-space model. It provide analytic tools for longitudinal and lateral stability of an aircraft.',
+      description: 'Advanced flight dynamics analysis tool for aerospace engineering. It provide analytic tools for longitudinal and lateral stability of an aircraft.',
       techStack: ['MATLAB', 'Python', 'Aerospace Engineering']
     },
     {

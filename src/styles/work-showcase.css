@@ -105,18 +105,18 @@
         position: static;
         transform: translateY(0) !important;
         background: rgba(44, 44, 44, 0.85);
-        padding: 1rem;
         margin-top: 0;
         border-radius: 0 0 20px 20px;
         width: 100%;
+        height: 15vh;
     }
 
     .work-title {
-        font-size: 2rem;
+        font-size: 1.2rem; /* adjust this value as needed */
     }
 
     .work-description {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .work-item:hover .work-image {
@@ -130,4 +130,37 @@ border-image: linear-gradient(90deg, #ff003c, #ff8e00, #fffa00, #00c140, #00c6ff
         border-bottom: 5px solid transparent;
         border-image: linear-gradient(90deg, #ff003c, #ff8e00, #fffa00, #00c140, #00c6ff, #2e3cff, #8c00ff) 1;
     }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+
+  .work-showcase {
+    width: 90%;
+      height: 50vh;
+  }
+
+  .work-item {
+    flex-direction: row;
+  }
+
+  .work-image {
+    width: 50%;
+    border-top-right-radius: 0;
+    height: auto;
+  }
+
+  .work-info {
+    width: 50%;
+      height: 50vh;
+      background: transparent;
+    padding: 1rem;
+  }
+
+  .work-title {
+    font-size: 1.2rem;
+  }
+
+  .work-description {
+    font-size: 0.9rem;
+  }
 }

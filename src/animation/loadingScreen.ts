@@ -1,3 +1,6 @@
+import { useInkSplash } from './inkSplash.ts';
+const { addSplash } = useInkSplash();
+
 export function initLoadingScreen() {
   const messages = [
     "Hey, I am PhantHive",
@@ -41,6 +44,17 @@ export function initLoadingScreen() {
         loadingScreen.style.display = "none";
       }, 1000);
     }, Math.max(0, remainingTime));
+  }
+
+  function randomSplash() {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    addSplash(x, y);
+  }
+
+  const splashInterval = minLoadingTime / 5;
+  for (let i = 0; i < 5; i++) {
+    setTimeout(randomSplash, i * splashInterval);
   }
 
   window.addEventListener("load", hideLoadingScreen);
