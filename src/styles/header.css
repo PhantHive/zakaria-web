@@ -3,45 +3,114 @@
     src: url('../assets/font/cartoon.otf') format('opentype');
 }
 
+:root {
+    --header-height: 10vh;
+    --gradient-colors: linear-gradient(20deg, #ff003c, #ff8e00, #fffa00, #00c140, #00c6ff, #2e3cff, #8c00ff);
+}
+
 @keyframes gradient {
     0% { background-position: 0 50%; }
-    20% { background-position: 25% 50%; }
-    40% { background-position: 50% 50%; }
-    60% { background-position: 75% 50%; }
-    80% { background-position: 100% 50%; }
-    100% { background-position: 0 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@keyframes lightningFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes splat {
+    0% {
+        transform: scale(0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
 }
 
 .header h1 {
     font-family: 'Cartoon', sans-serif;
     text-align: center;
-    font-size: 2em;
-    font-weight: 500;
-    background: linear-gradient(20deg, red, orange, yellow, green, blue, indigo, violet, purple);
+    font-size: 2.5em;
+    font-weight: 700;
+    background: var(--gradient-colors);
     background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
-    animation: gradient 5s ease infinite;
+    animation: gradient 3s linear infinite, splat 1s ease-out infinite;
     line-height: normal;
 }
 
 .header {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     height: var(--header-height);
-    padding: 0;
+    width: 100%;
     top: 0;
     left: 0;
-    width: 100%;
-    animation: lightningFlash 1s infinite;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+}
+
+.header .nav-links {
+    display: flex;
+    gap: 40px; /* Increased gap for more spacing */
+    align-items: center;
+}
+
+.header .nav-links a {
+    font-family: 'Cartoon', sans-serif;
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.header .nav-links a:hover {
+    color: yellow;
+}
+
+.header .nav-links span {
+    font-family: 'Cartoon', sans-serif;
+    font-size: 1.8em; /* Increased font size for visibility */
+    color: #ffffff;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px; /* Adjusted padding for better appearance */
+    border-radius: 8px;
+    user-select: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Added shadow for better visibility */
+}
+
+.header .nav-links span:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 @media screen and (orientation: landscape) {
     .header {
-        height: 10vh;
+        height: 8vh;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+}
+
+/*on phone only keep the second element (the span)
+ */
+
+@media screen and (max-width: 768px) {
+    .header .nav-links a {
+        display: none;
+    }
+
+    .header .nav-links span {
+        font-size: 1.5em;
+        background: transparent;
     }
 }

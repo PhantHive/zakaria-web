@@ -1,44 +1,42 @@
 <template>
-    <main class="main">
-        <canvas ref="canvasRef" class="paint-canvas"></canvas>
-        <div
-            v-for="splash in inkSplashes"
-            :key="splash.id"
-            class="ink-splash"
-            :style="{
-                left: `${splash.x}px`,
-                top: `${splash.y}px`,
-                backgroundColor: splash.color
-            }"
-        ></div>
-        <div class="work-box">
-            <div class="image-container">
-                <transition name="fade" mode="out-in">
-                    <img
-                        v-if="currentImage"
-                        :src="currentImage"
-                        :key="currentImage"
-                        alt="Work Image"
-                    />
-                </transition>
-            </div>
+  <main class="main">
+    <canvas ref="canvasRef" class="paint-canvas"></canvas>
+    <div
+      v-for="splash in inkSplashes"
+      :key="splash.id"
+      class="ink-splash"
+      :style="{
+        left: `${splash.x}px`,
+        top: `${splash.y}px`,
+        backgroundColor: splash.color
+      }"
+    ></div>
+    <div class="work-showcase">
+      <div class="work-item current" @click="nextImage">
+        <img :src="currentWork.image" :alt="currentWork.title" class="work-image">
+        <div class="work-info">
+          <h2 class="work-title">{{ currentWork.title }}</h2>
+          <p class="work-description">{{ currentWork.description }}</p>
         </div>
-    </main>
+        <div class="ink-splatter"></div>
+      </div>
+    </div>
+    <div class="ink-counter">Ink: {{ inkCount }}</div>
+  </main>
 </template>
 
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from "vue";
 import { initBackgroundTransition } from '../animation/backgroundTransition';
 import useImageSlider from '../animation/displayMyWork';
 import { useInkSplash } from '../animation/inkSplash';
-import { onMounted, onUnmounted, ref } from "vue";
-import { InkCounter } from "../animation/inkCounter.ts";
-import { initPaintSplatter } from "../animation/paintSplatter.ts";
+import { initPaintSplatter } from "../animation/paintSplatter";
 
-const { currentImage } = useImageSlider();
-const { inkSplashes } = useInkSplash();
+const { currentWork, nextImage } = useImageSlider();
+const { inkSplashes, addSplash } = useInkSplash();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-let inkCounter: InkCounter;
+const inkCount = ref(0);
 
 onMounted(() => {
   initBackgroundTransition();
@@ -47,15 +45,21 @@ onMounted(() => {
     onUnmounted(cleanup);
   }
 
-  // Create and add ink counter to the DOM
-  inkCounter = new InkCounter();
-  document.querySelector('.main')?.appendChild(inkCounter.getElement());
-
-  // Add click event listener to increment count and create ink splash
-  document.addEventListener('click', () => {
-    inkCounter.incrementCount();
+  document.addEventListener('click', (event) => {
+    inkCount.value++;
+    nextImage();
+    addSplash(event.clientX, event.clientY);
   });
+
+  // every 5 seconds, move to next image
+  setInterval(() => {
+    nextImage();
+  }, 5000);
 });
 </script>
 
-<style scoped src="../styles/main.scss"></style>
+<style>
+@import '../styles/layout.css';
+@import '../styles/effects.css';
+@import '../styles/work-showcase.css';
+</style>
