@@ -1,6 +1,4 @@
-let canvas: HTMLCanvasElement = document.getElementById(
-    'canvas',
-) as HTMLCanvasElement;
+let canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
 let c: CanvasRenderingContext2D = init(canvas.id);
 let w: number = (canvas.width = window.innerWidth);
 let h: number = (canvas.height = window.innerHeight);
@@ -34,19 +32,19 @@ class Firefly {
     }
 }
 
-let f: Firefly[] = [];
+let fireflies: Firefly[] = [];
 
 function draw(): void {
-    if (f.length < 100) {
+    if (fireflies.length < 100) {
         for (let j = 0; j < 10; j++) {
-            f.push(new Firefly());
+            fireflies.push(new Firefly());
         }
     }
-    for (let i = 0; i < f.length; i++) {
-        f[i].move();
-        f[i].show();
-        if (f[i].x < 0 || f[i].x > w || f[i].y < 0 || f[i].y > h) {
-            f.splice(i, 1);
+    for (let i = 0; i < fireflies.length; i++) {
+        fireflies[i].move();
+        fireflies[i].show();
+        if (fireflies[i].x < 0 || fireflies[i].x > w || fireflies[i].y < 0 || fireflies[i].y > h) {
+            fireflies.splice(i, 1);
         }
     }
 }
@@ -67,9 +65,7 @@ canvas.addEventListener(
 );
 
 function init(elemid: string): CanvasRenderingContext2D {
-    let canvas: HTMLCanvasElement = document.getElementById(
-        elemid,
-    ) as HTMLCanvasElement;
+    let canvas: HTMLCanvasElement = document.getElementById(elemid) as HTMLCanvasElement;
     let c: CanvasRenderingContext2D = canvas.getContext('2d')!;
     let w: number = (canvas.width = window.innerWidth);
     let h: number = (canvas.height = window.innerHeight);
@@ -99,6 +95,7 @@ export function initFairyBackground() {
 
   const fairySvg = `
     <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <!-- Replace this with your actual fairy SVG content -->
       <circle cx="32" cy="32" r="10" fill="pink" />
       <polygon points="20,30 40,30 30,10" fill="lightblue" />
       <polygon points="20,34 40,34 30,54" fill="lightblue" />
@@ -131,7 +128,7 @@ function animateFairy(fairy: HTMLElement) {
     const duration = 3000 + Math.random() * 2000; // Random duration between 3-5 seconds
     const start = performance.now();
 
-    function animate(time) {
+    function animate(time: DOMHighResTimeStamp) {
       const t = (time - start) / duration;
       if (t > 1) {
         fairy.style.left = `${x2}px`;
@@ -154,14 +151,13 @@ function animateFairy(fairy: HTMLElement) {
   moveFairy();
 }
 
-function bezierCurve(t, p0, p1, p2, p3) {
+function bezierCurve(t: number, p0: number, p1: number, p2: number, p3: number): number {
   const cX = 3 * (p1 - p0);
   const bX = 3 * (p2 - p1) - cX;
   const aX = p3 - p0 - cX - bX;
 
   return aX * Math.pow(t, 3) + bX * Math.pow(t, 2) + cX * t + p0;
 }
-
 
 window.addEventListener('resize', function () {
     w = canvas.width = window.innerWidth;
