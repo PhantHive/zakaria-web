@@ -94,13 +94,57 @@ export function initFairyBackground() {
   if (!fairiesContainer) return;
 
   const fairySvg = `
-    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <!-- Replace this with your actual fairy SVG content -->
-      <circle cx="32" cy="32" r="10" fill="pink" />
-      <polygon points="20,30 40,30 30,10" fill="lightblue" />
-      <polygon points="20,34 40,34 30,54" fill="lightblue" />
-      <polygon points="14,32 30,24 30,40" fill="lightblue" />
-      <polygon points="50,32 34,24 34,40" fill="lightblue" />
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g class="fairy">
+        <!-- Wings -->
+        <g class="wings">
+          <path class="wing back-wing" d="M40 40 Q20 30 30 10 Q50 20 40 40" fill="#E6E6FA" stroke="#B0C4DE" stroke-width="0.5" opacity="0.6">
+            <animate attributeName="d" values="
+              M40 40 Q20 30 30 10 Q50 20 40 40;
+              M40 40 Q15 35 30 10 Q50 20 40 40;
+              M40 40 Q20 30 30 10 Q50 20 40 40"
+              dur="0.5s" repeatCount="indefinite"/>
+          </path>
+          <path class="wing front-wing" d="M45 45 Q25 55 35 75 Q55 65 45 45" fill="#E6E6FA" stroke="#B0C4DE" stroke-width="0.5" opacity="0.8">
+            <animate attributeName="d" values="
+              M45 45 Q25 55 35 75 Q55 65 45 45;
+              M45 45 Q20 60 35 75 Q55 65 45 45;
+              M45 45 Q25 55 35 75 Q55 65 45 45"
+              dur="0.5s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <!-- Dress -->
+        <path d="M50 35 Q60 40 55 60 Q40 80 35 60 Q45 45 50 35" fill="#7FFFD4"/>
+        <!-- Body -->
+        <path d="M50 30 Q55 35 50 55 Q45 35 50 30" fill="#FFE4B5"/>
+        <!-- Head -->
+        <circle cx="50" cy="25" r="10" fill="#FFE4B5"/>
+        <!-- Hair -->
+        <path d="M50 15 Q60 15 55 25 Q60 20 60 30 L50 35 Q40 30 45 20 Z" fill="#FFD700"/>
+        <!-- Face -->
+        <circle cx="53" cy="23" r="1.5" fill="#4B0082"/> <!-- Eye -->
+        <path d="M54 27 Q56 28 55 29" fill="none" stroke="#FF69B4" stroke-width="1"/> <!-- Smile -->
+        <!-- Arm -->
+        <path d="M52 40 Q60 45 65 40" fill="none" stroke="#FFE4B5" stroke-width="2" stroke-linecap="round"/>
+        <!-- Pixie dust -->
+        <g class="pixie-dust">
+          <circle cx="65" cy="40" r="1" fill="#FFD700">
+            <animate attributeName="cy" values="40;35;40" dur="1s" repeatCount="indefinite"/>
+            <animate attributeName="cx" values="65;68;65" dur="1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="68" cy="42" r="1" fill="#FFD700">
+            <animate attributeName="cy" values="42;37;42" dur="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="cx" values="68;72;68" dur="1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="70" cy="38" r="1" fill="#FFD700">
+            <animate attributeName="cy" values="38;33;38" dur="0.8s" repeatCount="indefinite"/>
+            <animate attributeName="cx" values="70;74;70" dur="0.8s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+      </g>
     </svg>`;
 
   for (let i = 0; i < 10; i++) {
@@ -109,6 +153,7 @@ export function initFairyBackground() {
     fairy.classList.add('fairy');
     fairy.style.top = `${Math.random() * window.innerHeight}px`;
     fairy.style.left = `${Math.random() * window.innerWidth}px`;
+    fairy.style.transform = `scale(${0.3 + Math.random() * 0.3})`; // Random size between 0.3 and 0.6
     fairiesContainer.appendChild(fairy);
     animateFairy(fairy);
   }
@@ -120,12 +165,12 @@ function animateFairy(fairy: HTMLElement) {
     const y1 = parseFloat(fairy.style.top);
     const x2 = Math.random() * window.innerWidth;
     const y2 = Math.random() * window.innerHeight;
-    const cp1x = x1 + (x2 - x1) * 0.25 + (Math.random() - 0.5) * 100;
-    const cp1y = y1 + (y2 - y1) * 0.25 + (Math.random() - 0.5) * 100;
-    const cp2x = x1 + (x2 - x1) * 0.75 + (Math.random() - 0.5) * 100;
-    const cp2y = y1 + (y2 - y1) * 0.75 + (Math.random() - 0.5) * 100;
+    const cp1x = x1 + (x2 - x1) * 0.25 + (Math.random() - 0.5) * 200;
+    const cp1y = y1 + (y2 - y1) * 0.25 + (Math.random() - 0.5) * 200;
+    const cp2x = x1 + (x2 - x1) * 0.75 + (Math.random() - 0.5) * 200;
+    const cp2y = y1 + (y2 - y1) * 0.75 + (Math.random() - 0.5) * 200;
 
-    const duration = 3000 + Math.random() * 2000; // Random duration between 3-5 seconds
+    const duration = 8000 + Math.random() * 7000; // Random duration between 8-15 seconds
     const start = performance.now();
 
     function animate(time: DOMHighResTimeStamp) {
@@ -141,6 +186,22 @@ function animateFairy(fairy: HTMLElement) {
       const posY = bezierCurve(t, y1, cp1y, cp2y, y2);
       fairy.style.left = `${posX}px`;
       fairy.style.top = `${posY}px`;
+
+      // Calculate movement direction
+      const dx = posX - x1;
+      const dy = posY - y1;
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+      // Determine if the fairy should face left or right
+      const isFacingLeft = dx < 0;
+
+      // Apply transformations
+      const scale = fairy.style.transform.match(/scale\((.*?)\)/)?.[1] || '0.3';
+      const scaleTransform = `scale(${scale})`;
+      const rotateTransform = `rotate(${angle}deg)`;
+      const flipTransform = isFacingLeft ? 'scaleX(-1)' : 'scaleX(1)';
+
+      fairy.style.transform = `${scaleTransform} ${rotateTransform} ${flipTransform}`;
 
       requestAnimationFrame(animate);
     }
