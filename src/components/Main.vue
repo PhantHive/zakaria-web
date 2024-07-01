@@ -25,6 +25,7 @@
       </div>
     </div>
     <div class="ink-counter">Ink: {{ inkCount }}</div>
+    <div id="fairies-container"></div>
   </main>
 </template>
 
@@ -34,6 +35,7 @@ import { initBackgroundTransition } from '../animation/backgroundTransition';
 import useImageSlider from '../animation/displayMyWork';
 import { useInkSplash } from '../animation/inkSplash';
 import { initPaintSplatter } from '../animation/paintSplatter';
+import { initFairyBackground } from '../animation/fairyBackground';
 
 const { currentWork, nextImage, pauseSlider, resumeSlider } = useImageSlider();
 const { inkSplashes, addSplash } = useInkSplash();
@@ -70,6 +72,9 @@ onMounted(() => {
   onUnmounted(() => {
     clearInterval(imageInterval);
   });
+
+  // Initialize fairy background
+  initFairyBackground();
 });
 </script>
 
