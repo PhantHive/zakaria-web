@@ -118,4 +118,9 @@
     .work-description {
         font-size: 1rem;
     }
+
+    .work-item:hover .work-image {
+        transform: scale(1);
+        opacity: 0.9;
+    }
 }
