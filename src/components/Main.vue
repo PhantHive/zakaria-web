@@ -1,4 +1,12 @@
 <template>
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-bar">
+      <div class="loading-progress"></div>
+    </div>
+    <div class="typing-text">
+      <span id="text"></span><span id="cursor">|</span>
+    </div>
+  </div>
   <main class="main">
     <canvas ref="canvasRef" class="paint-canvas"></canvas>
     <div
@@ -36,6 +44,7 @@ import useImageSlider from '../animation/displayMyWork';
 import { useInkSplash } from '../animation/inkSplash';
 import { initPaintSplatter } from '../animation/paintSplatter';
 import { initFairyBackground } from '../animation/fairyBackground';
+import { initLoadingScreen } from '../animation/loadingScreen';
 
 const { currentWork, nextImage, pauseSlider, resumeSlider } = useImageSlider();
 const { inkSplashes, addSplash } = useInkSplash();
@@ -75,6 +84,9 @@ onMounted(() => {
 
   // Initialize fairy background
   initFairyBackground();
+
+  // Initialize loading screen
+  initLoadingScreen();
 });
 </script>
 
@@ -82,4 +94,5 @@ onMounted(() => {
 @import '../styles/layout.css';
 @import '../styles/effects.css';
 @import '../styles/work-showcase.css';
+@import '../styles/loading.css';
 </style>
