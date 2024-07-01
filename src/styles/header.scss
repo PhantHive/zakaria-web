@@ -1,0 +1,223 @@
+@font-face {
+    font-family: 'Cartoon';
+    src: url('../assets/font/cartoon.otf') format('opentype');
+}
+
+:root {
+    --header-height: 10vh;
+    --gradient-colors: linear-gradient(20deg, #ff003c, #ff8e00, #fffa00, #00c140, #00c6ff, #2e3cff, #8c00ff);
+}
+
+@keyframes gradient {
+    0% { background-position: 0 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@keyframes lightningFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes splat {
+    0% {
+        transform: scale(0);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes splatter {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(20);
+    opacity: 0;
+  }
+}
+
+@keyframes popAndShrink {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
+
+@keyframes splatoonPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.header {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: var(--header-height);
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    h1 {
+        font-family: 'Cartoon', sans-serif;
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: 700;
+        background: var(--gradient-colors);
+        background-size: 200% 200%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gradient 3s linear infinite, splat 1s ease-out infinite;
+        line-height: normal;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+
+        a {
+            font-family: 'Cartoon', sans-serif;
+            font-size: 1.5em;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+
+            &:hover {
+                color: yellow;
+            }
+        }
+
+        span {
+            font-family: 'Cartoon', sans-serif;
+            font-size: 1.8em;
+            color: #ffffff;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            padding: calc(var(--header-height) * 0.05);
+            border-radius: 8px;
+            user-select: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+            &:hover {
+                color: #ffffff;
+                background: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
+}
+
+.ink-counter {
+    position: relative;
+    right: -30vw;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    color: #fff;
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+
+    &-visible {
+        opacity: 1;
+    }
+}
+
+.count-display {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.milestone-animation {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: calc(var(--header-height) * 1.5);
+    height: calc(var(--header-height));
+    z-index: 9999;
+    pointer-events: none;
+    transition: transform 0.3s ease-out;
+
+    &.show-milestone {
+        animation: popAndShrink 2s ease-out forwards;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        stroke: #000000;
+        stroke-width: 2;
+        transition: fill 0.3s ease;
+    }
+}
+
+@keyframes popAndShrink {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+}
+
+.splatoon-effect {
+    animation: splatoonPulse 0.5s ease;
+}
+
+@keyframes splatoonPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@media screen and (orientation: landscape) {
+    .header {
+        height: 10vh;
+
+        h1 {
+            font-size: 2em;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header .nav-links {
+        a {
+            display: none;
+        }
+
+        span {
+            font-size: calc(var(--header-height) * 0.5);
+            background: none;
+        }
+    }
+
+    .header:hover .nav-links span {
+        background: none;
+    }
+}
