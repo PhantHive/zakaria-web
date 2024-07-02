@@ -52,22 +52,17 @@ function giveConsent() {
 onMounted(() => {
   if (localStorage.getItem('cookieConsent') === 'true') {
     consentGiven.value = true;
+    window.gtag('consent', 'update', {
+      ad_storage: 'granted',
+      analytics_storage: 'granted'
+    });
+  } else {
+    // Set the default consent state to denied
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      analytics_storage: 'denied'
+    });
   }
-  // Initialize Google Analytics
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    window.dataLayer.push(arguments);
-  }
-  window.gtag = gtag;
-
-  window.gtag('js', new Date());
-  window.gtag('config', 'G-ZT1012HMSC');
-
-  // Set the default consent state to denied
-  window.gtag('consent', 'default', {
-    ad_storage: 'denied',
-    analytics_storage: 'denied'
-  });
 });
 </script>
 
