@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import { initBackgroundTransition } from '../animation/backgroundTransition';
 import useImageSlider from '../animation/displayMyWork';
 import { useInkSplash } from '../animation/inkSplash';
