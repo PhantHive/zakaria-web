@@ -20,10 +20,13 @@
       }"
     ></div>
     <div class="work-showcase">
-      <div class="work-item current"
-           @click="nextImage"
-           @mouseover="pauseImageTransition"
-           @mouseout="resumeImageTransition">
+      <div
+        class="work-item"
+        :class="{ selected: state.isSelected }"
+        @click="toggleSelection"
+        @mouseover="pauseImageTransition"
+        @mouseout="resumeImageTransition"
+      >
         <img :src="currentWork.image" :alt="currentWork.title" class="work-image">
         <div class="work-info">
           <h2 class="work-title">{{ currentWork.title }}</h2>
@@ -37,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref} from "vue";
+import { onMounted, onUnmounted, ref, reactive } from "vue";
 import { initBackgroundTransition } from '../animation/backgroundTransition';
 import useImageSlider from '../animation/displayMyWork';
 import { useInkSplash } from '../animation/inkSplash';
@@ -49,13 +52,33 @@ const { currentWork, nextImage, pauseSlider, resumeSlider } = useImageSlider();
 const { inkSplashes, addSplash } = useInkSplash();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
+const state = reactive({
+  isSelected: false,
+  isSliderActive: true
+});
+
+const toggleSelection = () => {
+  console.log('Toggle selection called');
+  state.isSelected = !state.isSelected;
+  if (state.isSelected) {
+    console.log('Slider paused');
+    pauseSlider();
+  } else {
+    console.log('Slider resumed');
+    resumeSlider();
+  }
+};
 
 const pauseImageTransition = () => {
-  pauseSlider();
+  if (!state.isSelected) {
+    pauseSlider();
+  }
 };
 
 const resumeImageTransition = () => {
-  resumeSlider();
+  if (!state.isSelected) {
+    resumeSlider();
+  }
 };
 
 onMounted(() => {
@@ -70,9 +93,11 @@ onMounted(() => {
     addSplash(event.clientX, event.clientY);
   });
 
-  // every 5 seconds, move to next image
+  // Move to the next image every 5 seconds
   const imageInterval = setInterval(() => {
-    nextImage();
+    if (state.isSliderActive) {
+      nextImage();
+    }
   }, 5000);
 
   onUnmounted(() => {
