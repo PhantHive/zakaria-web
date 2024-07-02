@@ -7,17 +7,20 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  max-width: 400px;
+  max-width: 90%; /* Make it responsive */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 215, 0, 0.3);
   z-index: 1000;
   font-size: 16px;
   color: #FFFFFF;
   animation: float 3s ease-in-out infinite;
+  overflow: hidden; /* Prevent content overflow */
 }
 
 .fairy {
   margin-right: 20px;
   animation: fly 5s ease-in-out infinite;
+  width: 80px; /* Ensure the fairy size is consistent */
+  height: 80px;
 }
 
 .fairy-body {
@@ -26,6 +29,7 @@
 
 .consent-text {
   flex-grow: 1;
+  margin-right: 15px; /* Add some space between text and button */
 }
 
 .consent-button {
@@ -38,7 +42,6 @@
   font-size: 16px;
   font-weight: bold;
   color: #000000;
-  margin-top: 15px;
 }
 
 .consent-button:hover {
@@ -60,4 +63,33 @@
 @keyframes glow {
   from { filter: drop-shadow(0 0 2px #FFD700); }
   to { filter: drop-shadow(0 0 8px #FFD700); }
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 600px) {
+  .consent-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 15px;
+    font-size: 17px;
+  }
+
+  .fairy {
+    margin-bottom: 15px;
+    margin-right: 0;
+    width: 60px;
+    height: 60px;
+  }
+
+  .consent-text {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .consent-button {
+    align-self: center;
+  }
 }

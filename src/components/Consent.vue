@@ -29,17 +29,45 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+// Declare gtag on the window object
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+    dataLayer: any[];
+  }
+}
+
 const consentGiven = ref(false);
 
 function giveConsent() {
   consentGiven.value = true;
   localStorage.setItem('cookieConsent', 'true');
+  // Set the consent mode to granted
+  window.gtag('consent', 'update', {
+    ad_storage: 'granted',
+    analytics_storage: 'granted'
+  });
 }
 
 onMounted(() => {
   if (localStorage.getItem('cookieConsent') === 'true') {
     consentGiven.value = true;
   }
+  // Initialize Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  window.gtag = gtag;
+
+  window.gtag('js', new Date());
+  window.gtag('config', 'G-ZT1012HMSC');
+
+  // Set the default consent state to denied
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied'
+  });
 });
 </script>
 
