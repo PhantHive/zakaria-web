@@ -1,20 +1,43 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/zak-logo.png" />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/zak-logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- SEO Meta Tags -->
     <title>Zakaria || PhantHive</title>
-  </head>
-  <body>
+    <meta name="description" content="Zakaria - Discover the innovative world of PhantHive, where creativity meets technology. Explore my projects, insights, and services." />
+    <meta name="keywords" content="Zakaria, PhantHive, innovation, technology, creativity, projects, services" />
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Zakaria || PhantHive" />
+    <meta property="og:description" content="Discover the innovative world of PhantHive, where creativity meets technology. Explore my projects, insights, and services." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://phantive.com" />
+    <meta property="og:image" content="https://phantive.com/zak-logo.png" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Zakaria || PhantHive" />
+    <meta name="twitter:description" content="Discover the innovative world of PhantHive, where creativity meets technology. Explore my projects, insights, and services." />
+    <meta name="twitter:image" content="https://phantive.com/zak-logo.png" />
+
+    <!-- Google Analytics Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZT1012HMSC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZT1012HMSC');
+    </script>
+</head>
+<body>
     <div id="background"></div>
     <div id="app"></div>
+    <canvas id="canvas"></canvas>
     <script type="module" src="./src/main.ts"></script>
     <script type="module" src="./src/animation/fairyBackground.ts"></script>
-  <canvas id="canvas"></canvas>
-  </body>
+</body>
 </html>
