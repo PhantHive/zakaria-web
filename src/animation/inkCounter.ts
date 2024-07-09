@@ -23,15 +23,28 @@ export class InkCounter {
     this.counterElement.appendChild(this.milestoneElement);
 
     this.updateCounter();
+
+    this.clickCount = this.getCounterFromCookie();
+    this.updateCounter();
   }
 
   incrementCount() {
     this.clickCount++;
+    this.setCounterToCookie(this.clickCount);
     this.updateCounter();
 
     if (this.clickCount % 10 === 0) {
       this.showMilestoneAnimation();
     }
+  }
+
+  private getCounterFromCookie(): number {
+    const counter = parseInt(localStorage.getItem('counter') || '0');
+    return isNaN(counter) ? 0 : counter;
+  }
+
+  private setCounterToCookie(value: number): void {
+    localStorage.setItem('counter', value.toString());
   }
 
   private updateCounter() {
