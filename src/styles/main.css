@@ -1,0 +1,114 @@
+.app-container {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #ffffff;
+    overflow: auto;
+}
+
+.main-content {
+    position: relative;
+    min-height: 100vh;
+    padding-top: var(--header-height);
+    overflow: auto;
+}
+
+/* Particle Canvas */
+.particle-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+/* Work Grid Container */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    box-sizing: border-box;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    z-index: 2;
+    position: relative;
+}
+
+
+.fairies-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #ff9f9f);
+    transition: width 0.3s ease;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #ff6b6b, #ff9f9f);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .work-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .work-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .work-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .particle-canvas {
+        opacity: 0.4;
+    }
+}
+
+/* Performance Optimizations */
+.main-content, .work-grid, .ink-splashes-container {
+    will-change: transform;
+    backface-visibility: hidden;
+}

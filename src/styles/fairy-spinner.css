@@ -1,0 +1,94 @@
+ .fairy-spinner {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.spinner-ring {
+    animation: rotate 2s linear infinite;
+    transform-origin: center;
+}
+
+.fairy {
+    animation: bobbing 2s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.wings {
+    transform-origin: center;
+    animation: fluttering 0.2s ease-in-out infinite alternate;
+}
+
+.pixie-dust circle {
+    transform-origin: center;
+    filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bobbing {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+}
+
+@keyframes fluttering {
+    0% {
+        transform: scaleX(1) rotate(0deg);
+    }
+    100% {
+        transform: scaleX(0.9) rotate(5deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .fairy-spinner {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Performance Optimizations */
+.fairy-spinner,
+.spinner-ring,
+.fairy,
+.wings {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .fairy-spinner {
+        animation: rotate 3s linear infinite;
+    }
+
+    .fairy,
+    .wings,
+    .pixie-dust circle {
+        animation: none;
+    }
+}

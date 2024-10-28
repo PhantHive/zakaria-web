@@ -1,120 +1,122 @@
 <template>
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-bar">
-      <div class="loading-progress"></div>
-    </div>
-    <div class="typing-text">
-      <span id="text"></span><span id="cursor">|</span>
-    </div>
-  </div>
-  <main class="main">
-    <canvas ref="canvasRef" class="paint-canvas"></canvas>
-    <div
-      v-for="splash in inkSplashes"
-      :key="splash.id"
-      class="ink-splash"
-      :style="{
-        left: `${splash.x}px`,
-        top: `${splash.y}px`,
-        backgroundColor: splash.color
-      }"
-    ></div>
-    <div class="work-showcase">
-      <div
-        class="work-item"
-        :class="{ selected: state.isSelected }"
-        @click="toggleSelection"
-        @mouseover="pauseImageTransition"
-        @mouseout="resumeImageTransition"
-      >
-        <img :src="currentWork.image" :alt="currentWork.title" class="work-image">
-        <div class="work-info">
-          <h2 class="work-title">{{ currentWork.title }}</h2>
-          <p class="work-description">{{ currentWork.description }}</p>
+    <div class="app-container">
+        <!-- Loading Screen -->
+        <div v-if="isLoading" class="loading-screen">
+            <div class="loading-content">
+                <div class="loading-fairy">
+                    <FairySpinner />
+                </div>
+                <div class="loading-bar">
+                    <div
+                        :style="{ width: `${loadingProgress}%` }"
+                        class="loading-progress"
+                    ></div>
+                </div>
+                <div class="loading-text">
+                    <span class="gradient-text">{{ loadingText }}</span>
+                </div>
+            </div>
         </div>
-        <div class="ink-splatter"></div>
-      </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Particle Canvas -->
+            <canvas ref="particleCanvas" class="particle-canvas"></canvas>
+
+            <div
+                v-for="splash in inkSplashes"
+                :key="splash.id"
+                class="ink-splash animate"
+                :style="{
+                    left: `${splash.x}px`,
+                    top: `${splash.y}px`,
+                    '--splash-color': splash.color,
+                    '--splash-size': `${splash.size}px`,
+                    '--splash-rotation': `${splash.rotation}deg`,
+                }"
+            ></div>
+
+            <!-- Work Showcase -->
+            <section class="work-showcase">
+                <div class="work-grid">
+                    <WorkCard
+                        v-for="work in works"
+                        :key="work.title"
+                        :work="work"
+                        @interact="handleWorkInteraction"
+                    />
+                </div>
+            </section>
+
+            <!-- Fairy Background -->
+            <div ref="fairiesContainer" class="fairies-container"></div>
+        </main>
     </div>
-    <div id="fairies-container"></div>
-  </main>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, reactive } from "vue";
-import { initBackgroundTransition } from '../animation/backgroundTransition';
-import useImageSlider from '../animation/displayMyWork';
-import { useInkSplash } from '../animation/inkSplash';
-import { initPaintSplatter } from '../animation/paintSplatter';
-import { initFairyBackground } from '../animation/fairyBackground';
-import { initLoadingScreen } from '../animation/loadingScreen';
+import { ref, onMounted } from 'vue';
+import { initParticleSystem } from '../animation/particleSystem';
+import { initEnhancedFairySystem } from '../animation/enhancedFairy';
+import WorkCard from './WorkCard.vue';
+import FairySpinner from './FairySpinner.vue';
+import type { Work } from '../types/work';
+import { works } from '../data/works';
 
-const { currentWork, nextImage, pauseSlider, resumeSlider } = useImageSlider();
-const { inkSplashes, addSplash } = useInkSplash();
+const isLoading = ref(true);
+const loadingProgress = ref(0);
+const loadingText = ref('Summoning magical interface...');
+const particleCanvas = ref<HTMLCanvasElement | null>(null);
+const fairiesContainer = ref<HTMLElement | null>(null);
 
-const canvasRef = ref<HTMLCanvasElement | null>(null);
-const state = reactive({
-  isSelected: false,
-  isSliderActive: true
-});
+const loadingTexts = [
+    'Summoning magical interface...',
+    "Interfacing Zakaria's brain...",
+    'Brewing color potions...',
+    'Awakening pixel fairies...',
+    'Polishing the magic mirror...',
+];
 
-const toggleSelection = () => {
-  console.log('Toggle selection called');
-  state.isSelected = !state.isSelected;
-  if (state.isSelected) {
-    console.log('Slider paused');
-    pauseSlider();
-  } else {
-    console.log('Slider resumed');
-    resumeSlider();
-  }
-};
-
-const pauseImageTransition = () => {
-  if (!state.isSelected) {
-    pauseSlider();
-  }
-};
-
-const resumeImageTransition = () => {
-  if (!state.isSelected) {
-    resumeSlider();
-  }
-};
-
-onMounted(() => {
-  initBackgroundTransition();
-  if (canvasRef.value) {
-    const cleanup = initPaintSplatter(canvasRef.value);
-    onUnmounted(cleanup);
-  }
-
-  document.addEventListener('click', (event) => {
-    nextImage();
-    addSplash(event.clientX, event.clientY);
-  });
-
-  // Move to the next image every 5 seconds
-  const imageInterval = setInterval(() => {
-    if (state.isSliderActive) {
-      nextImage();
+async function simulateLoading() {
+    for (let i = 0; i <= 100; i += 20) {
+        loadingProgress.value = i;
+        loadingText.value =
+            loadingTexts[Math.floor((i / 100) * loadingTexts.length)];
+        await new Promise((resolve) => setTimeout(resolve, 500));
     }
-  }, 5000);
+    isLoading.value = false;
+}
 
-  onUnmounted(() => {
-    clearInterval(imageInterval);
-  });
+// function handleWorkInteraction(event: MouseEvent, work: Work) {
+//     addSplash(event.clientX, event.clientY);
+// }
 
-  // Initialize fairy background
-  initFairyBackground();
+onMounted(async () => {
+    if (particleCanvas.value) {
+        initParticleSystem(particleCanvas.value);
+    }
 
-  // Initialize loading screen
-  initLoadingScreen();
+    if (fairiesContainer.value) {
+        initEnhancedFairySystem(fairiesContainer.value);
+    }
+
+    await simulateLoading();
+
+    // const handleClick = (event: MouseEvent) => {
+    //
+    // };
+
+    // document.addEventListener('click', handleClick);
+    //
+    // return () => {
+    //     document.removeEventListener('click', handleClick);
+    // };
 });
 </script>
 
 <style>
-@import '../styles/layout.css';
-@import '../styles/effects.css';
-@import '../styles/work-showcase.css';
-@import '../styles/loading.css';
+@import '../styles/main.css';
+@import '../styles/effects.scss';
+@import '../styles/fairy-background.css';
+@import '../styles/performance.scss';
 </style>

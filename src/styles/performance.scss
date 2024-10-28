@@ -1,0 +1,35 @@
+ /* Add GPU acceleration for animations */
+.fairy,
+.ink-splash,
+.work-card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Reduce animation complexity on mobile */
+@media (max-width: 768px) {
+    .particle-canvas {
+        opacity: 0.3;
+    }
+
+    .fairy {
+        display: none;
+    }
+
+    .ink-splash {
+        --splash-size: calc(var(--splash-size) * 0.5);
+    }
+}
+
+/* Disable hover effects on mobile */
+@media (hover: none) {
+    .work-card:hover {
+        transform: none;
+    }
+
+    .work-image:hover {
+        transform: none;
+    }
+}
