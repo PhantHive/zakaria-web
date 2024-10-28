@@ -23,19 +23,6 @@
             <!-- Particle Canvas -->
             <canvas ref="particleCanvas" class="particle-canvas"></canvas>
 
-            <div
-                v-for="splash in inkSplashes"
-                :key="splash.id"
-                class="ink-splash animate"
-                :style="{
-                    left: `${splash.x}px`,
-                    top: `${splash.y}px`,
-                    '--splash-color': splash.color,
-                    '--splash-size': `${splash.size}px`,
-                    '--splash-rotation': `${splash.rotation}deg`,
-                }"
-            ></div>
-
             <!-- Work Showcase -->
             <section class="work-showcase">
                 <div class="work-grid">
@@ -43,7 +30,6 @@
                         v-for="work in works"
                         :key="work.title"
                         :work="work"
-                        @interact="handleWorkInteraction"
                     />
                 </div>
             </section>
@@ -60,7 +46,6 @@ import { initParticleSystem } from '../animation/particleSystem';
 import { initEnhancedFairySystem } from '../animation/enhancedFairy';
 import WorkCard from './WorkCard.vue';
 import FairySpinner from './FairySpinner.vue';
-import type { Work } from '../types/work';
 import { works } from '../data/works';
 
 const isLoading = ref(true);

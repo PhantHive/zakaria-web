@@ -1,7 +1,3 @@
-import { useInkSplash } from './inkSplash';
-
-const { createInkSplash } = useInkSplash();
-
 let currentBackground = 1;
 const totalBackgrounds = 2;
 let isTap = false;
@@ -11,18 +7,19 @@ let endTouchPosition: null | number = null;
 const swipeThreshold = window.innerWidth * 0.1;
 
 function changeBackground(direction: number) {
-    currentBackground = ((currentBackground - 1 + direction + totalBackgrounds) % totalBackgrounds) + 1;
-
-    const colors = ['#ff4e50', '#fc913a', '#f9d62e', '#8bc34a', '#00bcd4', '#7e57c2'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-    createInkSplash(window.innerWidth / 2, window.innerHeight / 2, randomColor);
+    currentBackground =
+        ((currentBackground - 1 + direction + totalBackgrounds) %
+            totalBackgrounds) +
+        1;
 
     const background = document.getElementById('background');
     if (background) {
         background.className = ''; // Remove all classes
         // if screen width is less than 800px, use phone backgrounds except if the phone is in landscape mode
-        if (window.innerWidth <= 800 && window.innerWidth < window.innerHeight) {
+        if (
+            window.innerWidth <= 800 &&
+            window.innerWidth < window.innerHeight
+        ) {
             background.classList.add(`phone-0${currentBackground}`);
         } else {
             background.classList.add(`background-0${currentBackground}`);
@@ -65,6 +62,10 @@ export function initBackgroundTransition() {
     // Initialize the background
     const background = document.getElementById('background');
     if (background) {
-        background.classList.add(window.innerWidth <= 800 && window.innerWidth < window.innerHeight ? 'phone-01' : 'background-01');
+        background.classList.add(
+            window.innerWidth <= 800 && window.innerWidth < window.innerHeight
+                ? 'phone-01'
+                : 'background-01',
+        );
     }
 }

@@ -65,22 +65,22 @@ export function initParticleSystem(canvas: HTMLCanvasElement) {
         if (elapsed < fpsInterval) return;
         lastTime = currentTime - (elapsed % fpsInterval);
 
-        ctx.fillStyle = '#1a1a2e';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx!.fillStyle = '#1a1a2e';
+        ctx!.fillRect(0, 0, canvas.width, canvas.height);
 
         // Update and draw particles
-        ctx.beginPath();
+        ctx!.beginPath();
         particles.forEach((particle) => {
             updateParticle(particle);
 
             // Draw particle
-            ctx.moveTo(particle.x, particle.y);
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx!.moveTo(particle.x, particle.y);
+            ctx!.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         });
 
         // Batch render all particles
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.fill();
+        ctx!.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx!.fill();
 
         // Draw connections between nearby particles
         drawConnections();
