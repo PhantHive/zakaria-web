@@ -19,6 +19,7 @@ export interface Milestone {
     title: string;
     description: string;
     icon: string;
+    section: string;
     experienceId: number;
 }
 
@@ -138,6 +139,7 @@ export const milestones = [
         title: 'International Exchange',
         description: 'Started my journey in Latvia! 🌍',
         icon: '✈️',
+        section: 'education',
         experienceId: 1, // Add this if needed
     },
     {
@@ -146,14 +148,25 @@ export const milestones = [
         title: 'Graduation',
         description: 'Completed Aerospace Engineering! 🎓',
         icon: '🎓',
+        section: 'education',
         experienceId: 2, // Add this if needed
     },
     {
         id: 3,
+        date: '2021-07-01',
+        title: 'International Internship',
+        description: 'Internship in Barcelona! 🌞',
+        icon: '🌞',
+        section: 'professional',
+        experienceId: 4,
+    },
+    {
+        id: 4,
         date: '2024-01-01',
         title: 'Freelance Journey',
         description: 'Started Phearion! 🚀',
         icon: '💼',
+        section: 'professional',
         experienceId: 3, // Add this if needed
     },
 ];

@@ -84,18 +84,34 @@
                                         >
                                     </div>
                                 </div>
-
-                                <!-- Inline milestone if exists -->
-                                <div v-if="exp.milestone" class="milestone">
-                                    <div class="milestone-icon">
-                                        {{ exp.milestone.icon }}
-                                    </div>
-                                    <div class="milestone-label">
-                                        {{ exp.milestone.title }}
-                                    </div>
-                                </div>
                             </div>
                         </template>
+                    </div>
+
+                    <div class="milestone-container">
+                        <div
+                            v-for="milestone in professionalMilestones"
+                            :key="milestone.id"
+                            class="milestone"
+                            @mouseenter="
+                                handleHover(
+                                    { description: milestone.description },
+                                    $event,
+                                )
+                            "
+                            @mousemove="updateMascotPosition($event)"
+                            @mouseleave="handleLeave"
+                        >
+                            <span class="milestone-date">{{
+                                formatDate(milestone.date)
+                            }}</span>
+                            <div class="milestone-icon">
+                                {{ milestone.icon }}
+                            </div>
+                            <div class="milestone-label">
+                                {{ milestone.title }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -161,34 +177,37 @@
                                         >
                                     </div>
                                 </div>
-
-                                <!-- Inline milestone if exists -->
-                                <div v-if="edu.milestone" class="milestone">
-                                    <div class="milestone-icon">
-                                        {{ edu.milestone.icon }}
-                                    </div>
-                                    <div class="milestone-label">
-                                        {{ edu.milestone.title }}
-                                    </div>
-                                </div>
                             </div>
                         </template>
                     </div>
+
+                    <div class="milestone-container">
+                        <div
+                            v-for="milestone in educationMilestones"
+                            :key="milestone.id"
+                            class="milestone"
+                            @mouseenter="
+                                handleHover(
+                                    { description: milestone.description },
+                                    $event,
+                                )
+                            "
+                            @mousemove="updateMascotPosition($event)"
+                            @mouseleave="handleLeave"
+                        >
+                            <span class="milestone-date">{{
+                                formatDate(milestone.date)
+                            }}</span>
+                            <div class="milestone-icon">
+                                {{ milestone.icon }}
+                            </div>
+                            <div class="milestone-label">
+                                {{ milestone.title }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
-
-            <!-- Standalone Milestones -->
-            <div
-                v-for="milestone in standaloneMilestones"
-                :key="milestone.id"
-                class="milestone standalone"
-                :style="{
-                    left: `${getPositionX(milestone.date)}%`,
-                }"
-            >
-                <div class="milestone-icon">{{ milestone.icon }}</div>
-                <div class="milestone-label">{{ milestone.title }}</div>
-            </div>
         </div>
     </div>
 </template>
@@ -206,10 +225,14 @@ const showMascot = ref(false);
 const currentHoverText = ref('');
 const mascotPosition = ref({ x: 0, y: 0 });
 
-// Separate standalone milestones from the ones attached to experiences
-const standaloneMilestones = computed(() => {
-    return milestones.filter((m) => !m.experienceId);
-});
+// Separate milestones by section
+const professionalMilestones = computed(() =>
+    milestones.filter((m) => m.section === 'professional'),
+);
+
+const educationMilestones = computed(() =>
+    milestones.filter((m) => m.section === 'education'),
+);
 
 const calculateTagsWidth = (tags: string[]) => {
     return (
@@ -221,7 +244,6 @@ const calculateTagsWidth = (tags: string[]) => {
     );
 };
 
-// Position calculation
 const getPositionX = (date: string) => {
     const start = new Date('2018-01-01').getTime();
     const end = new Date('2024-12-31').getTime();
@@ -237,38 +259,39 @@ const getDuration = (start: string, end: string) => {
     return ((endTime - startTime) / totalDuration) * 100;
 };
 
-// Smart positioning for bars
 const calculateBarPosition = (xPosition: number) => {
     if (xPosition > 70) return 'position-right';
     if (xPosition < 30) return 'position-left';
     return 'position-center';
 };
 
-// Smart positioning for tags
 const calculateTagsPosition = (
     startPosition: number,
     width: number,
     tags: string[],
 ) => {
-    const containerWidth = 1200; // Max container width
+    const containerWidth = 1200;
     const tagsWidth = calculateTagsWidth(tags);
     const barStartPx = (containerWidth * startPosition) / 100;
     const barWidthPx = (containerWidth * width) / 100;
     const barCenterPx = barStartPx + barWidthPx / 2;
 
-    // If tags would overflow right side
     if (barCenterPx + tagsWidth / 2 > containerWidth) {
         return 'tags-right';
     }
-    // If tags would overflow left side
     if (barCenterPx - tagsWidth / 2 < 0) {
         return 'tags-left';
     }
-    // Default center position
     return 'tags-center';
 };
 
-// Interaction handlers
+const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+    });
+};
+
 const handleHover = (item: any, event: MouseEvent) => {
     showMascot.value = true;
     currentHoverText.value = item.description;
