@@ -22,6 +22,10 @@
     opacity: 0.7;
 }
 
+.work-showcase {
+    padding-top: 5rem;
+}
+
 /* Work Grid Container */
 .work-grid {
     display: grid;

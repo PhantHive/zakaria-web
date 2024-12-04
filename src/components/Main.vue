@@ -1,49 +1,39 @@
 <template>
-    <div class="app-container">
-        <!-- Loading Screen -->
-        <div v-if="isLoading" class="loading-screen">
-            <div class="loading-content">
-                <div class="loading-fairy">
-                    <FairySpinner />
-                </div>
-                <div class="loading-bar">
-                    <div
-                        :style="{ width: `${loadingProgress}%` }"
-                        class="loading-progress"
-                    ></div>
-                </div>
-                <div class="loading-text">
-                    <span class="gradient-text">{{ loadingText }}</span>
-                </div>
+    <!-- Loading Screen -->
+    <div v-if="isLoading" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-fairy">
+                <FairySpinner />
+            </div>
+            <div class="loading-bar">
+                <div
+                    :style="{ width: `${loadingProgress}%` }"
+                    class="loading-progress"
+                ></div>
+            </div>
+            <div class="loading-text">
+                <span class="gradient-text">{{ loadingText }}</span>
             </div>
         </div>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Particle Canvas -->
-            <canvas ref="particleCanvas" class="particle-canvas"></canvas>
-
-            <!-- Work Showcase -->
-            <section class="work-showcase">
-                <div class="work-grid">
-                    <WorkCard
-                        v-for="work in works"
-                        :key="work.title"
-                        :work="work"
-                    />
-                </div>
-            </section>
-
-            <!-- Fairy Background -->
-            <div ref="fairiesContainer" class="fairies-container"></div>
-        </main>
     </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Work Showcase -->
+        <section class="work-showcase">
+            <div class="work-grid">
+                <WorkCard
+                    v-for="work in works"
+                    :key="work.title"
+                    :work="work"
+                />
+            </div>
+        </section>
+    </main>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { initParticleSystem } from '../animation/particleSystem';
-import { initEnhancedFairySystem } from '../animation/enhancedFairy';
 import WorkCard from './WorkCard.vue';
 import FairySpinner from './FairySpinner.vue';
 import { works } from '../data/works';
@@ -51,8 +41,6 @@ import { works } from '../data/works';
 const isLoading = ref(true);
 const loadingProgress = ref(0);
 const loadingText = ref('Summoning magical interface...');
-const particleCanvas = ref<HTMLCanvasElement | null>(null);
-const fairiesContainer = ref<HTMLElement | null>(null);
 
 const loadingTexts = [
     'Summoning magical interface...',
@@ -77,14 +65,6 @@ async function simulateLoading() {
 // }
 
 onMounted(async () => {
-    if (particleCanvas.value) {
-        initParticleSystem(particleCanvas.value);
-    }
-
-    if (fairiesContainer.value) {
-        initEnhancedFairySystem(fairiesContainer.value);
-    }
-
     await simulateLoading();
 
     // const handleClick = (event: MouseEvent) => {
@@ -102,6 +82,5 @@ onMounted(async () => {
 <style>
 @import '../styles/main.css';
 @import '../styles/effects.scss';
-@import '../styles/fairy-background.css';
 @import '../styles/performance.scss';
 </style>

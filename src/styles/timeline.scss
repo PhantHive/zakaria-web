@@ -1,0 +1,363 @@
+// src/styles/timeline.scss
+
+.timeline-page {
+  padding: 10rem 2rem 8rem;
+  background: rgba(13, 25, 42, 0.95);
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.timeline-sections {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+
+.timeline-section {
+  margin-bottom: 8rem;
+  position: relative;
+
+  &:last-child {
+    margin-bottom: 4rem;
+  }
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #4A90E2;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.timeline-container {
+  position: relative;
+  padding: 2rem 0;
+  margin-bottom: 100px;
+  height: auto;
+}
+
+.timeline-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0;
+  position: relative;
+
+  .year-marker {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 2;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.timeline-bars {
+  position: relative;
+  height: 200px;
+  margin: 3rem 0;
+}
+
+.experience-bar {
+  position: absolute;
+  height: 40px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .tags {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .milestone {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  // Category styles with improved gradients
+  &.internship {
+    background: linear-gradient(90deg, #4A90E2, #50E3C2);
+  }
+
+  &.project {
+    background: linear-gradient(90deg, #F5A623, #F7B733);
+  }
+
+  &.education-prep {
+    background: #9B6EF3;
+  }
+
+  &.education-main {
+    background: #4568DC;
+  }
+
+  &.education-exchange {
+    background: #7C69EE;
+  }
+}
+
+.bar-content {
+  height: 100%;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.bar-label {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+// Smart tag positioning
+.tags {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  white-space: nowrap;
+  top: -45px;
+  transform: translateY(10px);
+
+  // Right alignment (for left overflow prevention)
+  &.tags-left {
+    left: 0;
+    right: auto;
+    transform: translateY(10px);
+
+    .experience-bar:hover & {
+      transform: translateY(0);
+    }
+  }
+
+  // Left alignment (for right overflow prevention)
+  &.tags-right {
+    left: auto;
+    right: 0;
+    transform: translateY(10px);
+
+    .experience-bar:hover & {
+      transform: translateY(0);
+    }
+  }
+
+  // Center alignment (default)
+  &.tags-center {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+
+    .experience-bar:hover & {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  .experience-bar:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.2rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  color: white;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.2rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  color: white;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+// Interactive milestone styling
+.milestone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  z-index: 5;
+
+  &.standalone {
+    bottom: -100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    opacity: 1;
+
+    &:hover {
+      transform: translate(-50%, -2px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  &.attached {
+    bottom: -60px;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    opacity: 0;
+
+    .experience-bar:hover & {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .milestone-icon {
+    font-size: 1.2rem;
+    color: #4A90E2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .milestone-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    line-height: 1.2;
+    max-width: 200px;
+  }
+}
+
+.floating-mascot {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  transition: all 0.1s ease;
+
+  .mascot-image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  .mascot-speech {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    max-width: 200px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #333;
+      line-height: 1.4;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-page {
+    padding: 8rem 1rem 6rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .timeline-section {
+    margin-bottom: 6rem;
+
+    &:last-child {
+      margin-bottom: 3rem;
+    }
+  }
+
+  .milestone {
+    padding: 0.4rem 0.8rem;
+
+    .milestone-label {
+      font-size: 0.7rem;
+    }
+  }
+
+  .floating-mascot {
+    display: none;
+  }
+
+  .bar-label {
+    font-size: 0.8rem;
+  }
+
+  .timeline-container {
+    margin-bottom: 80px;
+  }
+
+  .tags {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-axis .year-marker {
+    font-size: 0.8rem;
+    transform: rotate(-45deg);
+  }
+
+  .timeline-container {
+    margin-bottom: 60px;
+  }
+}
