@@ -1,21 +1,42 @@
 <template>
     <header class="header">
         <div class="nav-links">
-            <router-link to="/" class="nav-link" active-class="active" exact
+            <router-link
+                to="/"
+                class="nav-link"
+                :class="{ 'router-link-active': $route.path === '/' }"
+                exact
                 >Home</router-link
             >
-            <router-link to="/timeline" class="nav-link" active-class="active"
-                >Timeline</router-link
-            >
-            <a href="https://github.com/PhantHive" target="_blank">GitHub</a>
             <span>PhantHive</span>
-            <a
-                href="https://www.linkedin.com/in/zakaria-chaouki-8316801b9/"
-                target="_blank"
-                >LinkedIn</a
+            <router-link
+                to="/timeline"
+                class="nav-link"
+                :class="{ 'router-link-active': $route.path === '/timeline' }"
+                >Timeline</router-link
             >
         </div>
         <div ref="inkCounterContainer" class="ink-counter-container"></div>
+        <router-link
+            to="/projects"
+            class="floating-projects-btn"
+            :class="{ active: $route.path === '/projects' }"
+        >
+            <div class="btn-content">
+                <div class="icon-wrapper">🚀</div>
+                <span class="tooltip">Projects</span>
+            </div>
+            <div class="pulse-ring"></div>
+        </router-link>
+        <router-link
+            to="/"
+            class="floating-home-btn"
+            :class="{ active: $route.path === '/' }"
+        >
+            <div class="btn-content">
+                <div class="icon-wrapper">🏠</div>
+            </div>
+        </router-link>
     </header>
 </template>
 

@@ -158,4 +158,8 @@ button:focus-visible {
   #background.phone-02 {
     background-image: url('../public/background/phone-02.jpg');
   }
+
+    .custom-cursor {
+        display: none;
+    }
 }
