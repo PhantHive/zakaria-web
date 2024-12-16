@@ -186,6 +186,27 @@ const projects: Project[] = [
     },
     {
         id: 3,
+        title: 'Zumi Chan',
+        status: 'Active',
+        description:
+            'The first ever E.T.H.I.C.A.L lyrics music player with a touch of AI and your personal kawaii assistant Zumi!',
+        infoBadge: 'Private project, but would extend it to public maybe...',
+        video: {
+            title: 'Zumi Chan Demo',
+            url: '/videos/zumi.mp4',
+            thumbnail: '/videos/thumbnails/zumi.png',
+        },
+        criteria: [
+            { icon: '🎶', name: 'Music Player & Assistant' },
+            {
+                icon: '🤖',
+                name: 'Lyrics are 100% E.T.H.I.C.A.L, no bad words, no bad content, no bad influence, no drugs, no alcohol, no violence and much more.',
+            },
+            { icon: '🌸', name: 'Kawaii' },
+        ],
+    },
+    {
+        id: 4,
         title: 'Humanity',
         status: 'Paused',
         description:
