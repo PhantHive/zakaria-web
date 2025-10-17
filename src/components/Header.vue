@@ -1,42 +1,54 @@
 <template>
     <header class="header">
-        <div class="nav-links">
-            <router-link
-                to="/"
-                class="nav-link"
-                :class="{ 'router-link-active': $route.path === '/' }"
-                exact
-                >Home</router-link
+        <div class="header-container">
+            <div class="brand">
+                <router-link to="/" class="brand-link"> PhantHive </router-link>
+            </div>
+
+            <nav class="nav-menu" :class="{ 'mobile-open': mobileMenuOpen }">
+                <router-link
+                    to="/"
+                    class="nav-item"
+                    exact
+                    @click="closeMobileMenu"
+                >
+                    Home
+                </router-link>
+                <router-link
+                    to="/timeline"
+                    class="nav-item"
+                    @click="closeMobileMenu"
+                >
+                    Timeline
+                </router-link>
+                <router-link
+                    to="/projects"
+                    class="nav-item"
+                    @click="closeMobileMenu"
+                >
+                    Projects
+                </router-link>
+                <router-link
+                    to="/applications"
+                    class="nav-item"
+                    @click="closeMobileMenu"
+                >
+                    Applications
+                </router-link>
+            </nav>
+
+            <div ref="inkCounterContainer" class="ink-counter-container"></div>
+
+            <button
+                class="burger-menu"
+                @click="toggleMobileMenu"
+                :class="{ active: mobileMenuOpen }"
             >
-            <span>PhantHive</span>
-            <router-link
-                to="/timeline"
-                class="nav-link"
-                :class="{ 'router-link-active': $route.path === '/timeline' }"
-                >Timeline</router-link
-            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <div ref="inkCounterContainer" class="ink-counter-container"></div>
-        <router-link
-            to="/projects"
-            class="floating-projects-btn"
-            :class="{ active: $route.path === '/projects' }"
-        >
-            <div class="btn-content">
-                <div class="icon-wrapper">🚀</div>
-                <span class="tooltip">Projects</span>
-            </div>
-            <div class="pulse-ring"></div>
-        </router-link>
-        <router-link
-            to="/"
-            class="floating-home-btn"
-            :class="{ active: $route.path === '/' }"
-        >
-            <div class="btn-content">
-                <div class="icon-wrapper">🏠</div>
-            </div>
-        </router-link>
     </header>
 </template>
 
@@ -48,17 +60,24 @@ export default defineComponent({
     name: 'Header',
     setup() {
         const inkCounterContainer = ref<HTMLElement | null>(null);
+        const mobileMenuOpen = ref(false);
         let inkCounter: InkCounter;
+
+        const toggleMobileMenu = () => {
+            mobileMenuOpen.value = !mobileMenuOpen.value;
+        };
+
+        const closeMobileMenu = () => {
+            mobileMenuOpen.value = false;
+        };
 
         onMounted(async () => {
             inkCounter = new InkCounter();
             if (inkCounterContainer.value) {
                 inkCounterContainer.value.appendChild(inkCounter.getElement());
 
-                // Wait for the next DOM update cycle
                 await nextTick();
 
-                // Apply styles after the element is in the DOM
                 const counterElement =
                     inkCounterContainer.value.querySelector('.ink-counter');
                 if (counterElement) {
@@ -79,6 +98,9 @@ export default defineComponent({
 
         return {
             inkCounterContainer,
+            mobileMenuOpen,
+            toggleMobileMenu,
+            closeMobileMenu,
         };
     },
 });
